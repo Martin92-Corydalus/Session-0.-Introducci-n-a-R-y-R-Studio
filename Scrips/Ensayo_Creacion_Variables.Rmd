@@ -1,0 +1,247 @@
+---
+title: "Session-0.-Introduccion a R y R Studio."
+author: "Martin Murillo" #cambia este nombre por el tuyo y borra este mensaje
+date: "`r Sys.Date()`"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+## INTRODUCCION
+El presente código fue desarrollado en formato R Markdown (RMarkdown), una herramienta de programación reproducible que permite integrar texto, código en R y resultados de análisis dentro de un mismo documento. Este formato facilita la elaboración de reportes científicos y académicos, ya que combina explicaciones teóricas con la ejecución automática de análisis estadísticos, tablas y gráficos. En RMarkdown, los fragmentos de código se organizan en bloques denominados chunks, los cuales pueden ejecutarse individualmente o de manera completa para generar documentos en formatos como HTML, PDF o Word.
+
+El objetivo del script es analizar parámetros ambientales y fisicoquímicos registrados en diferentes transectos de un río durante tres periodos de muestreo (mayo, septiembre y octubre). Para ello, se emplean diversas librerías de R orientadas al manejo de datos, análisis estadístico y visualización gráfica.
+
+El código inicia con la configuración de los parámetros de ejecución y la carga de paquetes necesarios para el análisis. Posteriormente, se importan bases de datos en formato .csv, de las cuales se extraen variables ambientales como temperatura ambiental y del agua, conductividad, oxígeno disuelto, pH, humedad, velocidad de corriente y caudal. A partir de estas variables se calculan medidas de tendencia central, específicamente promedios mensuales, con el propósito de comparar las condiciones ambientales entre los distintos periodos de estudio.
+
+Finalmente, el script integra los resultados en tablas resumen y desarrolla un análisis de agrupamiento jerárquico (cluster analysis) mediante distancia euclidiana, permitiendo evaluar la similitud entre meses según los parámetros ambientales registrados. Los resultados son exportados en formatos .csv y .png, facilitando su interpretación, visualización y posterior presentación en informes científicos o académicos.
+
+
+## PROCEDIMIENTO        
+Establecer parametros de paquete knit y carga de paquetes en R
+```{r setup}
+knitr::opts_chunk$set(echo = TRUE, cahe=TRUE, message=FALSE, warning=FALSE, fig.width=12, fig.height=4.5, error=TRUE,cache = TRUE)
+# Establecer formatos de agrupacion de codigos de R
+
+# Cargar paquetes de R 
+xfun::pkg_attach("readr", "here", "dplyr", "tidyr", "tibble", "plotrix","ggplot2", "Hmisc", "readxl","unmarked","AHMbook", "AICcmodavg", "tidyverse", "vegan", "DHARMa", "corrplot", "kimisc", "car", "abdiv", "ggfortify", "ggpubr", "qwraps2", "car")
+```
+
+# 1. Carga de datos de parametros ambientales de un Rio 
+Importaremos al entorno de R las bases de datos a trabajar.
+```{r Cargar tabla}
+###Cargar tabla de Datos de parametros para 5 transectos, en los cuales se tomo datos al inicio, medio y final.  
+# .csv= formato de valores separados por coma
+
+Par_Transectos <- read_csv(here("Datos","Parametros_Amb.csv"))
+Par_Transectos2 <- read_csv(here("Datos","Parametros_Amb2.csv"))
+Par_Transectos3 <- read_csv(here("Datos","")) # agregar entre comillas el nombre de la tabla
+
+# Explorar los datos, ver los datos de la tabla como hoja de calculo
+View(Par_Transectos)
+
+# Ver un resumen de Filas columna y datos contenidos 
+str(Par_Transectos)
+```
+
+2. Creacion y manipulacion de variables (vectores).
+```{r manipulacion}
+
+####Contraste de Variables entre los 2 muestreos
+###Calcular Medidas de Tendencia Central y Dispersion para los parametros fisico-quimicos en cada transecto
+
+###Mayo: Crear variable para temperatura ambiental, del agua, conductividad, o2, pH, % luz, % humedad, ancho, pendiente para 1° viaje
+Temp_Amb1 <- Par_Transectos[,2]
+Temp_Agua1<- Par_Transectos[,3]
+Conductividad1<- Par_Transectos[,4]
+O21<- Par_Transectos[,5]
+pH1<- Par_Transectos[,6]
+E_Luz1<- Par_Transectos[,]# la variable entrada de luz se encuentra en la columna 7
+Humedad1<- Par_Transectos[,8]
+Ancho1<- Par_Transectos[,9]
+Profundidad1<- Par_Transectos[,10]
+Velocidad1<- Par_Transectos[,11]
+Caudal1<- Par_Transectos[,12]
+
+###Septiembre: Crear variable para temperatura ambiental, del agua, conductividad, o2, pH, % luz, % humedad, ancho, pendiente para 2° viaje
+Temp_Amb2 <- Par_Transectos2[,2]
+Temp_Agua2<- Par_Transectos2[,3]
+Conductividad2<- Par_Transectos2[,4]
+O22<- Par_Transectos2[,5]
+pH2<- Par_Transectos2[,6]
+E_Luz2<- Par_Transectos2[,7]
+Humedad2<- Par_Transectos2[,8]
+Ancho2<- Par_Transectos2[,9]
+Profundidad2<- Par_Transectos2[,10]
+Velocidad2<- Par_Transectos2[,] # Velocidad de corriente se encuentra en columna 11
+Caudal2<- Par_Transectos2[,12]
+
+###Octubre: Crear variable para temperatura ambiental, del agua, conductividad, o2, pH, % luz, % humedad, ancho, pendiente para 3° viaje
+
+## Completar Codigo calculando datos octubre o tabla 3
+  
+Temp_Amb3 <- Par_Transectos3[,2]
+Temp_Agua3<- Par_Transectos3[,3]
+Conductividad3<- Par_Transectos3[,4]
+O23<- Par_Transectos3[,5]
+pH3<- Par_Transectos3[,6]
+E_Luz3<- Par_Transectos3[,7]
+Humedad3<- Par_Transectos3[,8]
+Ancho3<- Par_Transectos3[,9]
+Profundidad3<- Par_Transectos3[,10]
+Velocidad3<- Par_Transectos3[,11] 
+Caudal3<- Par_Transectos3[,12]
+```
+
+3. Calculo de promedios por variable
+```{r promedios}
+###Calcular medias para parametros por mes
+##Fusionar los Calculos del promedio total y fusionarlos para la tabla de informe
+
+##Mayo
+
+PromTempAmbMay<-mean(Temp_Amb1$`T° Amb (°C)`)
+PromTemp_AguaMay<- mean(Temp_Agua1$`T° Agua (°C)`)
+PromConductividadMay<- mean(Conductividad1$`Conduc (Us/cm)`)
+PromO2May<- mean(O21$`O2 disuel (ppm)`)
+PrompHMay<- mean(pH1$pH)
+PromE_LuzMay<- mean(E_Luz1$`% E. Luz`)
+PromHumedadMay<- mean(Humedad1$`% Humedad`)
+PromAnchoMay<- mean(Ancho1$`Ancho m`)
+PromProfundidadMay<- mean(Profundidad1$`Prof (cm)`)
+PromVelocidadMay<- mean(Velocidad1$`Vel (m/Seg)`)
+PromCaudalMay<- mean(Caudal1$Caudal)
+
+
+##Septiembre
+
+PromTempAmbSep<-mean(Temp_Amb2$`T° Amb (°C)`)
+PromTemp_AguaSep<- mean(Temp_Agua2$`T° Agua (°C)`)
+PromConductividadSep<- mean(Conductividad2$`Conduc (Us/cm)`)
+PromO2Sep<- mean(O22$`O2 disuel (ppm)`)
+PrompHSep<- mean(pH2$pH)
+PromE_LuzSep<- mean(E_Luz2$`% E. Luz`)
+PromHumedadSep<- mean(Humedad2$`% Humedad`)
+PromAnchoSep<- mean(Ancho2$`Ancho m`)
+PromProfundidadSep<- mean(Profundidad2$`Prof (cm)`)
+PromVelocidadSep<- mean(Velocidad2$`Vel (m/Seg)`)
+PromCaudalSep<- mean(Caudal2$Caudal)
+
+
+
+##Octubre
+
+# completar codigo con calculos para mes de octubre
+
+
+```
+
+4. Creacion de tabla (data frame)
+```{r fusionar vectores en tabla}
+
+##Fusionar los Calculos del promedio total y fusionarlos para la tabla de informe
+###Agrupar Los datos del promedio de los parametros por Mes en una tabla
+
+PromTempAmb<- data.frame(PromTempAmbMay, PromTempAmbSep, PromTempAmbOct)
+PromTempAgu<- data.frame(PromTemp_AguaMay, PromTemp_AguaSep, PromTemp_AguaOct)
+
+PromCondMes<- data.frame(PromConductividadMay, PromConductividadSep, PromConductividadOct)
+
+PromO2Meses<- data.frame(PromO2May, PromO2Sep, PromO2Oct)
+
+PrompHMeses<- data.frame(PrompHMay, PrompHSep, PrompHOct)
+
+PromELuzMes<- data.frame( PromE_LuzMay, PromE_LuzSep, PromE_LuzOct)
+
+PromHumeMes<- data.frame(PromHumedadMay, PromHumedadSep, PromHumedadOct)
+
+PromAnchoMe<- data.frame(PromAnchoMay, PromAnchoSep, PromAnchoOct)
+
+PromProfMes<- data.frame(PromProfundidadMay, PromProfundidadSep, PromProfundidadOct)
+
+
+PromVelMese<- data.frame(PromVelocidadMay, PromVelocidadSep, PromVelocidadOct)
+
+PromCauMese<- data.frame(#agregar variable Caudalpara cada mes
+
+
+# Crea una lista desordenada, por eso hago una lista:
+
+names(PromTempAmb)<-c("May", "Sep","Oct")
+
+names(PromTempAgu)<- c("May", "Sep","Oct")
+
+
+names(PromCondMes)<- c("May", "Sep","Oct")
+names(PromO2Meses)<- c("May", "Sep","Oct")
+
+names(PrompHMeses)<- c("May", "Sep","Oct")
+
+names(PromELuzMes)<- c("May", "Sep","Oct")
+
+names(PromHumeMes)<- c("May", "Sep","Oct")
+
+names(PromAnchoMe)<- c("May", "Sep","Oct")
+
+names(PromProfMes)<- c("May", "Sep","Oct")
+
+
+names(PromVelMese)<- c("May", "Sep","Oct")
+
+
+names(PromCauMese)<- c("May", "Sep","Oct")
+
+
+# para nombrarlos en vez de [1], uso:
+row.names(PromTempAmb)<-c("PromTempAmb")
+row.names(PromTempAgu)<-c("PromTempAgu")
+row.names(PromCondMes)<-c("PromCondMes")
+row.names(PromO2Meses)<-c("PromO2Meses")
+row.names(PrompHMeses)<-c("PrompHMeses")
+row.names(PromELuzMes)<-c("PromELuzMes")
+row.names(PromHumeMes)<-c("PromHumeMes")
+row.names(PromAnchoMe)<-c("PromAnchoMe")
+row.names(PromProfMes)<-c("PromProfMes")
+row.names(PromVelMese)<-c("PromVelMese")
+row.names(PromCauMese)<-c("PromCauMese")
+
+
+##########Fusionar las filas de los calculos
+
+PromParMesClus<-rbind(PromTempAmb, PromTempAgu,PromCondMes, PromO2Meses, PrompHMeses, PromELuzMes, PromHumeMes, PromAnchoMe, PromProfMes, PromVelMese, PromCauMese)
+
+#Para obtener resumen de datos en Hoja de calculo.csv
+write.csv (PromParMesClus, file="PromParMesClus.csv") #buscar en carpeta del proyecto
+
+
+###Cargar tabla de Datos de parametros de todo la muestra universo setwd("~/R/Proyect/Tesis/Parametros/Parametros")
+Par_Transectosall<- read.csv("~/R/Proyect/Tesis/Parametros/Parametros_All.csv")
+
+##########Cluster por mes 
+
+PromParMesClus<-as.data.frame(PromParMesClus)
+##LLamar la libreria vegan para hacer cortes en el cladograma
+library(vegan)
+
+###Realizaremos el analisis de Cluster (clasificaciones gerarquicas), mediante diferentes metodos
+##Metodo de distancia euclidiana por promedios.
+PromParMesClus<-t(PromParMesClus) #transponer posicion de filas y columnas en tabla
+
+HCMesPar<- hclust(dist(PromParMesClus), method="average")
+# ver tabla de distancias
+summary(HCMesPar)
+print(HCMesPar)
+
+# Graficar analisis
+png(file="HCMesPar.png") # preparando para guardar grafico, omitir esta linea si desea ver el grafico en consola
+plot(HCMesPar ,hang=-1, main="Similitud entre Meses de acuerdo a parametros ambientales", labels=c("Mar", "Sep", "Oct"))
+
+rect.hclust(HCMesPar,2) # numero de agrupaciones del cluster
+dev.off() # cerrar lineas y guardar grafico
+
+```
+
+
+# CONCLUSIONES
+
+### Escribe dos conclusiones sobre el comportamiento de los datos analizados

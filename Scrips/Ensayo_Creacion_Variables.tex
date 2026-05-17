@@ -1,0 +1,478 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Session-0.-Introduccion a R y R Studio.},
+  pdfauthor={Martin Murillo},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Session-0.-Introduccion a R y R Studio.}
+\author{Martin Murillo}
+\date{2026-05-16}
+
+\begin{document}
+\maketitle
+
+\hypertarget{introduccion}{%
+\section{INTRODUCCION}\label{introduccion}}
+
+\hypertarget{el-presente-cuxf3digo-en-lenguaje-r-tiene-como-objetivo-analizar-paruxe1metros-ambientales-y-fisicoquuxedmicos-registrados-en-diferentes-transectos-de-un-ruxedo-durante-tres-periodos-de-muestreo-mayo-septiembre-y-octubre.-para-ello-se-emplean-distintas-libreruxedas-de-r-enfocadas-en-manejo-de-datos-anuxe1lisis-estaduxedstico-y-visualizaciuxf3n-gruxe1fica.}{%
+\subsection{El presente código en lenguaje R tiene como objetivo
+analizar parámetros ambientales y fisicoquímicos registrados en
+diferentes transectos de un río durante tres periodos de muestreo (mayo,
+septiembre y octubre). Para ello, se emplean distintas librerías de R
+enfocadas en manejo de datos, análisis estadístico y visualización
+gráfica.}\label{el-presente-cuxf3digo-en-lenguaje-r-tiene-como-objetivo-analizar-paruxe1metros-ambientales-y-fisicoquuxedmicos-registrados-en-diferentes-transectos-de-un-ruxedo-durante-tres-periodos-de-muestreo-mayo-septiembre-y-octubre.-para-ello-se-emplean-distintas-libreruxedas-de-r-enfocadas-en-manejo-de-datos-anuxe1lisis-estaduxedstico-y-visualizaciuxf3n-gruxe1fica.}}
+
+\hypertarget{el-script-inicia-con-la-carga-y-organizaciuxf3n-de-bases-de-datos-en-formato-.csv-posteriormente-se-extraen-variables-ambientales-como-temperatura-conductividad-oxuxedgeno-disuelto-ph-humedad-velocidad-de-corriente-y-caudal.-a-partir-de-estos-datos-se-calculan-medidas-de-tendencia-central-especuxedficamente-promedios-mensuales-con-el-fin-de-comparar-las-condiciones-ambientales-entre-los-diferentes-periodos-de-estudio.}{%
+\subsection{El script inicia con la carga y organización de bases de
+datos en formato .csv, posteriormente se extraen variables ambientales
+como temperatura, conductividad, oxígeno disuelto, pH, humedad,
+velocidad de corriente y caudal. A partir de estos datos, se calculan
+medidas de tendencia central, específicamente promedios mensuales, con
+el fin de comparar las condiciones ambientales entre los diferentes
+periodos de
+estudio.}\label{el-script-inicia-con-la-carga-y-organizaciuxf3n-de-bases-de-datos-en-formato-.csv-posteriormente-se-extraen-variables-ambientales-como-temperatura-conductividad-oxuxedgeno-disuelto-ph-humedad-velocidad-de-corriente-y-caudal.-a-partir-de-estos-datos-se-calculan-medidas-de-tendencia-central-especuxedficamente-promedios-mensuales-con-el-fin-de-comparar-las-condiciones-ambientales-entre-los-diferentes-periodos-de-estudio.}}
+
+\hypertarget{finalmente-el-cuxf3digo-integra-los-resultados-en-tablas-resumen-y-desarrolla-un-anuxe1lisis-de-agrupamiento-jeruxe1rquico-cluster-analysis-utilizando-distancia-euclidiana-permitiendo-evaluar-la-similitud-entre-meses-seguxfan-los-paruxe1metros-ambientales-registrados.-los-resultados-obtenidos-se-exportan-en-formatos-.csv-y-gruxe1ficos-.png-para-su-posterior-interpretaciuxf3n-y-presentaciuxf3n.}{%
+\subsection{Finalmente, el código integra los resultados en tablas
+resumen y desarrolla un análisis de agrupamiento jerárquico (cluster
+analysis) utilizando distancia euclidiana, permitiendo evaluar la
+similitud entre meses según los parámetros ambientales registrados. Los
+resultados obtenidos se exportan en formatos .csv y gráficos .png para
+su posterior interpretación y
+presentación.}\label{finalmente-el-cuxf3digo-integra-los-resultados-en-tablas-resumen-y-desarrolla-un-anuxe1lisis-de-agrupamiento-jeruxe1rquico-cluster-analysis-utilizando-distancia-euclidiana-permitiendo-evaluar-la-similitud-entre-meses-seguxfan-los-paruxe1metros-ambientales-registrados.-los-resultados-obtenidos-se-exportan-en-formatos-.csv-y-gruxe1ficos-.png-para-su-posterior-interpretaciuxf3n-y-presentaciuxf3n.}}
+
+\hypertarget{establecer-parametros-de-paquete-knit-y-carga-de-paquetes-en-r}{%
+\section{Establecer parametros de paquete knit y carga de paquetes en
+R}\label{establecer-parametros-de-paquete-knit-y-carga-de-paquetes-en-r}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\NormalTok{opts\_chunk}\SpecialCharTok{$}\FunctionTok{set}\NormalTok{(}\AttributeTok{echo =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{cahe=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{message=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{warning=}\ConstantTok{FALSE}\NormalTok{, }\AttributeTok{fig.width=}\DecValTok{12}\NormalTok{, }\AttributeTok{fig.height=}\FloatTok{4.5}\NormalTok{, }\AttributeTok{error=}\ConstantTok{TRUE}\NormalTok{,}\AttributeTok{cache =} \ConstantTok{TRUE}\NormalTok{)}
+\CommentTok{\# Establecer formatos de agrupacion de codigos de R}
+
+\CommentTok{\# Cargar paquetes de R }
+\NormalTok{xfun}\SpecialCharTok{::}\FunctionTok{pkg\_attach}\NormalTok{(}\StringTok{"readr"}\NormalTok{, }\StringTok{"here"}\NormalTok{, }\StringTok{"dplyr"}\NormalTok{, }\StringTok{"tidyr"}\NormalTok{, }\StringTok{"tibble"}\NormalTok{, }\StringTok{"plotrix"}\NormalTok{,}\StringTok{"ggplot2"}\NormalTok{, }\StringTok{"Hmisc"}\NormalTok{, }\StringTok{"readxl"}\NormalTok{,}\StringTok{"unmarked"}\NormalTok{,}\StringTok{"AHMbook"}\NormalTok{, }\StringTok{"AICcmodavg"}\NormalTok{, }\StringTok{"tidyverse"}\NormalTok{, }\StringTok{"vegan"}\NormalTok{, }\StringTok{"DHARMa"}\NormalTok{, }\StringTok{"corrplot"}\NormalTok{, }\StringTok{"kimisc"}\NormalTok{, }\StringTok{"car"}\NormalTok{, }\StringTok{"abdiv"}\NormalTok{, }\StringTok{"ggfortify"}\NormalTok{, }\StringTok{"ggpubr"}\NormalTok{, }\StringTok{"qwraps2"}\NormalTok{, }\StringTok{"car"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## here() starts at C:/R/Asesorias/Curso_E_P_C_2026/Materiales_Iniciales/Repositorio_GitHub/Session-0.-Introducci-n-a-R-y-R-Studio
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'Hmisc'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:dplyr':
+## 
+##     src, summarize
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     format.pval, units
+\end{verbatim}
+
+\begin{verbatim}
+## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+## v forcats   1.0.0     v purrr     1.0.4
+## v lubridate 1.9.4     v stringr   1.5.2
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter()    masks stats::filter()
+## x dplyr::lag()       masks stats::lag()
+## x Hmisc::src()       masks dplyr::src()
+## x Hmisc::summarize() masks dplyr::summarize()
+## i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+## Loading required package: permute
+## 
+## This is DHARMa 0.4.7. For overview type '?DHARMa'. For recent changes, type news(package = 'DHARMa')
+## 
+## corrplot 0.95 loaded
+## 
+## Loading required package: carData
+## 
+## 
+## Attaching package: 'car'
+## 
+## 
+## The following object is masked from 'package:purrr':
+## 
+##     some
+## 
+## 
+## The following object is masked from 'package:unmarked':
+## 
+##     vif
+## 
+## 
+## The following object is masked from 'package:dplyr':
+## 
+##     recode
+## 
+## 
+## 
+## Attaching package: 'abdiv'
+## 
+## 
+## The following object is masked from 'package:unmarked':
+## 
+##     richness
+## 
+## 
+## 
+## Attaching package: 'qwraps2'
+## 
+## 
+## The following objects are masked from 'package:ggpubr':
+## 
+##     mean_ci, mean_sd, median_iqr
+## 
+## 
+## The following object is masked from 'package:car':
+## 
+##     logit
+## 
+## 
+## The following object is masked from 'package:ggplot2':
+## 
+##     mean_se
+\end{verbatim}
+
+\hypertarget{carga-de-datos-de-parametros-ambientales-de-un-rio}{%
+\section{Carga de datos de parametros ambientales de un
+Rio}\label{carga-de-datos-de-parametros-ambientales-de-un-rio}}
+
+\hypertarget{dar-formato-a-los-datos}{%
+\subsection{Dar formato a los datos}\label{dar-formato-a-los-datos}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#Cargar tabla de Datos de parametros para 5 transectos, en los cuales se tomo datos al inicio, medio y final.  }
+\CommentTok{\# .csv= formato de valores separados por coma}
+
+\NormalTok{Par\_Transectos }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"Datos"}\NormalTok{,}\StringTok{"Parametros\_Amb.csv"}\NormalTok{))}
+\NormalTok{Par\_Transectos2 }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"Datos"}\NormalTok{,}\StringTok{"Parametros\_Amb2.csv"}\NormalTok{))}
+\NormalTok{Par\_Transectos3 }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"Datos"}\NormalTok{,}\StringTok{""}\NormalTok{)) }\CommentTok{\# agregar entre comillas el nombre de la tabla}
+
+\CommentTok{\# Explorar los datos, ver los datos de la tabla como hoja de calculo}
+\FunctionTok{View}\NormalTok{(Par\_Transectos)}
+
+\CommentTok{\# Ver un resumen de Filas columna y datos contenidos }
+\FunctionTok{str}\NormalTok{(Par\_Transectos)}
+
+\DocumentationTok{\#\#\#\#Contraste de Variables entre los 2 muestreos}
+\DocumentationTok{\#\#\#Calcular Medidas de Tendencia Central y Dispersion para los parametros fisico{-}quimicos en cada transecto}
+
+\DocumentationTok{\#\#\#Mayo: Crear variable para temperatura ambiental, del agua, conductividad, o2, pH, \% luz, \% humedad, ancho, pendiente para 1° viaje}
+\NormalTok{Temp\_Amb1 }\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos[,}\DecValTok{2}\NormalTok{]}
+\NormalTok{Temp\_Agua1}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos[,}\DecValTok{3}\NormalTok{]}
+\NormalTok{Conductividad1}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos[,}\DecValTok{4}\NormalTok{]}
+\NormalTok{O21}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos[,}\DecValTok{5}\NormalTok{]}
+\NormalTok{pH1}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos[,}\DecValTok{6}\NormalTok{]}
+\NormalTok{E\_Luz1}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos[,]}\CommentTok{\# la variable entrada de luz se encuentra en la columna 7}
+\NormalTok{Humedad1}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos[,}\DecValTok{8}\NormalTok{]}
+\NormalTok{Ancho1}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos[,}\DecValTok{9}\NormalTok{]}
+\NormalTok{Profundidad1}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos[,}\DecValTok{10}\NormalTok{]}
+\NormalTok{Velocidad1}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos[,}\DecValTok{11}\NormalTok{]}
+\NormalTok{Caudal1}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos[,}\DecValTok{12}\NormalTok{]}
+
+\DocumentationTok{\#\#\#Septiembre: Crear variable para temperatura ambiental, del agua, conductividad, o2, pH, \% luz, \% humedad, ancho, pendiente para 2° viaje}
+\NormalTok{Temp\_Amb2 }\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos2[,}\DecValTok{2}\NormalTok{]}
+\NormalTok{Temp\_Agua2}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos2[,}\DecValTok{3}\NormalTok{]}
+\NormalTok{Conductividad2}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos2[,}\DecValTok{4}\NormalTok{]}
+\NormalTok{O22}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos2[,}\DecValTok{5}\NormalTok{]}
+\NormalTok{pH2}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos2[,}\DecValTok{6}\NormalTok{]}
+\NormalTok{E\_Luz2}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos2[,}\DecValTok{7}\NormalTok{]}
+\NormalTok{Humedad2}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos2[,}\DecValTok{8}\NormalTok{]}
+\NormalTok{Ancho2}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos2[,}\DecValTok{9}\NormalTok{]}
+\NormalTok{Profundidad2}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos2[,}\DecValTok{10}\NormalTok{]}
+\NormalTok{Velocidad2}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos2[,] }\CommentTok{\# Velocidad de corriente se encuentra en columna 11}
+\NormalTok{Caudal2}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos2[,}\DecValTok{12}\NormalTok{]}
+
+\DocumentationTok{\#\#\#Octubre: Crear variable para temperatura ambiental, del agua, conductividad, o2, pH, \% luz, \% humedad, ancho, pendiente para 3° viaje}
+
+\DocumentationTok{\#\# Completar Codigo calculando datos octubre o tabla 3}
+  
+\NormalTok{Temp\_Amb3 }\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos3[,}\DecValTok{2}\NormalTok{]}
+\NormalTok{Temp\_Agua3}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos3[,}\DecValTok{3}\NormalTok{]}
+\NormalTok{Conductividad3}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos3[,}\DecValTok{4}\NormalTok{]}
+\NormalTok{O23}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos3[,}\DecValTok{5}\NormalTok{]}
+\NormalTok{pH3}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos3[,}\DecValTok{6}\NormalTok{]}
+\NormalTok{E\_Luz3}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos3[,}\DecValTok{7}\NormalTok{]}
+\NormalTok{Humedad3}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos3[,}\DecValTok{8}\NormalTok{]}
+\NormalTok{Ancho3}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos3[,}\DecValTok{9}\NormalTok{]}
+\NormalTok{Profundidad3}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos3[,}\DecValTok{10}\NormalTok{]}
+\NormalTok{Velocidad3}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos3[,}\DecValTok{11}\NormalTok{] }
+\NormalTok{Caudal3}\OtherTok{\textless{}{-}}\NormalTok{ Par\_Transectos3[,}\DecValTok{12}\NormalTok{]}
+
+
+
+\DocumentationTok{\#\#\#Calcular medias para parametros por mes}
+\DocumentationTok{\#\#Fusionar los Calculos del promedio total y fusionarlos para la tabla de informe}
+
+\DocumentationTok{\#\#Mayo}
+
+\NormalTok{PromTempAmbMay}\OtherTok{\textless{}{-}}\FunctionTok{mean}\NormalTok{(Temp\_Amb1}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{T° Amb (°C)}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{PromTemp\_AguaMay}\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(Temp\_Agua1}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{T° Agua (°C)}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{PromConductividadMay}\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(Conductividad1}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Conduc (Us/cm)}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{PromO2May}\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(O21}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{O2 disuel (ppm)}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{PrompHMay}\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(pH1}\SpecialCharTok{$}\NormalTok{pH)}
+\NormalTok{PromE\_LuzMay}\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(E\_Luz1}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{\% E. Luz}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{PromHumedadMay}\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(Humedad1}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{\% Humedad}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{PromAnchoMay}\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(Ancho1}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Ancho m}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{PromProfundidadMay}\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(Profundidad1}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Prof (cm)}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{PromVelocidadMay}\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(Velocidad1}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Vel (m/Seg)}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{PromCaudalMay}\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(Caudal1}\SpecialCharTok{$}\NormalTok{Caudal)}
+
+
+\DocumentationTok{\#\#Septiembre}
+
+\NormalTok{PromTempAmbSep}\OtherTok{\textless{}{-}}\FunctionTok{mean}\NormalTok{(Temp\_Amb2}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{T° Amb (°C)}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{PromTemp\_AguaSep}\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(Temp\_Agua2}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{T° Agua (°C)}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{PromConductividadSep}\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(Conductividad2}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Conduc (Us/cm)}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{PromO2Sep}\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(O22}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{O2 disuel (ppm)}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{PrompHSep}\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(pH2}\SpecialCharTok{$}\NormalTok{pH)}
+\NormalTok{PromE\_LuzSep}\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(E\_Luz2}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{\% E. Luz}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{PromHumedadSep}\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(Humedad2}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{\% Humedad}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{PromAnchoSep}\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(Ancho2}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Ancho m}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{PromProfundidadSep}\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(Profundidad2}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Prof (cm)}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{PromVelocidadSep}\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(Velocidad2}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Vel (m/Seg)}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{PromCaudalSep}\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(Caudal2}\SpecialCharTok{$}\NormalTok{Caudal)}
+
+
+
+\DocumentationTok{\#\#Octubre}
+
+\CommentTok{\# completar codigo con calculos para mes de octubre}
+
+
+
+\DocumentationTok{\#\#Fusionar los Calculos del promedio total y fusionarlos para la tabla de informe}
+\DocumentationTok{\#\#\#Agrupar Los datos del promedio de los parametros por Mes en una tabla}
+
+\NormalTok{PromTempAmb}\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(PromTempAmbMay, PromTempAmbSep, PromTempAmbOct)}
+\NormalTok{PromTempAgu}\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(PromTemp\_AguaMay, PromTemp\_AguaSep, PromTemp\_AguaOct)}
+
+\NormalTok{PromCondMes}\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(PromConductividadMay, PromConductividadSep, PromConductividadOct)}
+
+\NormalTok{PromO2Meses}\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(PromO2May, PromO2Sep, PromO2Oct)}
+
+\NormalTok{PrompHMeses}\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(PrompHMay, PrompHSep, PrompHOct)}
+
+\NormalTok{PromELuzMes}\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{( PromE\_LuzMay, PromE\_LuzSep, PromE\_LuzOct)}
+
+\NormalTok{PromHumeMes}\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(PromHumedadMay, PromHumedadSep, PromHumedadOct)}
+
+\NormalTok{PromAnchoMe}\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(PromAnchoMay, PromAnchoSep, PromAnchoOct)}
+
+\NormalTok{PromProfMes}\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(PromProfundidadMay, PromProfundidadSep, PromProfundidadOct)}
+
+
+\NormalTok{PromVelMese}\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(PromVelocidadMay, PromVelocidadSep, PromVelocidadOct)}
+
+\NormalTok{PromCauMese}\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\CommentTok{\#agregar variable Caudalpara cada mes}
+
+
+\CommentTok{\# Crea una lista desordenada, por eso hago una lista:}
+
+\FunctionTok{names}\NormalTok{(PromTempAmb)}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"May"}\NormalTok{, }\StringTok{"Sep"}\NormalTok{,}\StringTok{"Oct"}\NormalTok{)}
+
+\FunctionTok{names}\NormalTok{(PromTempAgu)}\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"May"}\NormalTok{, }\StringTok{"Sep"}\NormalTok{,}\StringTok{"Oct"}\NormalTok{)}
+
+
+\FunctionTok{names}\NormalTok{(PromCondMes)}\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"May"}\NormalTok{, }\StringTok{"Sep"}\NormalTok{,}\StringTok{"Oct"}\NormalTok{)}
+\FunctionTok{names}\NormalTok{(PromO2Meses)}\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"May"}\NormalTok{, }\StringTok{"Sep"}\NormalTok{,}\StringTok{"Oct"}\NormalTok{)}
+
+\FunctionTok{names}\NormalTok{(PrompHMeses)}\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"May"}\NormalTok{, }\StringTok{"Sep"}\NormalTok{,}\StringTok{"Oct"}\NormalTok{)}
+
+\FunctionTok{names}\NormalTok{(PromELuzMes)}\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"May"}\NormalTok{, }\StringTok{"Sep"}\NormalTok{,}\StringTok{"Oct"}\NormalTok{)}
+
+\FunctionTok{names}\NormalTok{(PromHumeMes)}\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"May"}\NormalTok{, }\StringTok{"Sep"}\NormalTok{,}\StringTok{"Oct"}\NormalTok{)}
+
+\FunctionTok{names}\NormalTok{(PromAnchoMe)}\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"May"}\NormalTok{, }\StringTok{"Sep"}\NormalTok{,}\StringTok{"Oct"}\NormalTok{)}
+
+\FunctionTok{names}\NormalTok{(PromProfMes)}\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"May"}\NormalTok{, }\StringTok{"Sep"}\NormalTok{,}\StringTok{"Oct"}\NormalTok{)}
+
+
+\FunctionTok{names}\NormalTok{(PromVelMese)}\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"May"}\NormalTok{, }\StringTok{"Sep"}\NormalTok{,}\StringTok{"Oct"}\NormalTok{)}
+
+
+\FunctionTok{names}\NormalTok{(PromCauMese)}\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"May"}\NormalTok{, }\StringTok{"Sep"}\NormalTok{,}\StringTok{"Oct"}\NormalTok{)}
+
+
+\CommentTok{\# para nombrarlos en vez de [1], uso:}
+\FunctionTok{row.names}\NormalTok{(PromTempAmb)}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"PromTempAmb"}\NormalTok{)}
+\FunctionTok{row.names}\NormalTok{(PromTempAgu)}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"PromTempAgu"}\NormalTok{)}
+\FunctionTok{row.names}\NormalTok{(PromCondMes)}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"PromCondMes"}\NormalTok{)}
+\FunctionTok{row.names}\NormalTok{(PromO2Meses)}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"PromO2Meses"}\NormalTok{)}
+\FunctionTok{row.names}\NormalTok{(PrompHMeses)}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"PrompHMeses"}\NormalTok{)}
+\FunctionTok{row.names}\NormalTok{(PromELuzMes)}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"PromELuzMes"}\NormalTok{)}
+\FunctionTok{row.names}\NormalTok{(PromHumeMes)}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"PromHumeMes"}\NormalTok{)}
+\FunctionTok{row.names}\NormalTok{(PromAnchoMe)}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"PromAnchoMe"}\NormalTok{)}
+\FunctionTok{row.names}\NormalTok{(PromProfMes)}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"PromProfMes"}\NormalTok{)}
+\FunctionTok{row.names}\NormalTok{(PromVelMese)}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"PromVelMese"}\NormalTok{)}
+\FunctionTok{row.names}\NormalTok{(PromCauMese)}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\StringTok{"PromCauMese"}\NormalTok{)}
+
+
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#Fusionar las filas de los calculos}
+
+\NormalTok{PromParMesClus}\OtherTok{\textless{}{-}}\FunctionTok{rbind}\NormalTok{(PromTempAmb, PromTempAgu,PromCondMes, PromO2Meses, PrompHMeses, PromELuzMes, PromHumeMes, PromAnchoMe, PromProfMes, PromVelMese, PromCauMese)}
+
+\CommentTok{\#Para obtener resumen de datos en Hoja de calculo.csv}
+\FunctionTok{write.csv}\NormalTok{ (PromParMesClus, }\AttributeTok{file=}\StringTok{"PromParMesClus.csv"}\NormalTok{) }\CommentTok{\#buscar en carpeta del proyecto}
+
+
+\DocumentationTok{\#\#\#Cargar tabla de Datos de parametros de todo la muestra universo setwd("\textasciitilde{}/R/Proyect/Tesis/Parametros/Parametros")}
+\NormalTok{Par\_Transectosall}\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"\textasciitilde{}/R/Proyect/Tesis/Parametros/Parametros\_All.csv"}\NormalTok{)}
+
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#Cluster por mes }
+
+\NormalTok{PromParMesClus}\OtherTok{\textless{}{-}}\FunctionTok{as.data.frame}\NormalTok{(PromParMesClus)}
+\DocumentationTok{\#\#LLamar la libreria vegan para hacer cortes en el cladograma}
+\FunctionTok{library}\NormalTok{(vegan)}
+
+\DocumentationTok{\#\#\#Realizaremos el analisis de Cluster (clasificaciones gerarquicas), mediante diferentes metodos}
+\DocumentationTok{\#\#Metodo de distancia euclidiana por promedios.}
+\NormalTok{PromParMesClus}\OtherTok{\textless{}{-}}\FunctionTok{t}\NormalTok{(PromParMesClus) }\CommentTok{\#transponer posicion de filas y columnas en tabla}
+
+\NormalTok{HCMesPar}\OtherTok{\textless{}{-}} \FunctionTok{hclust}\NormalTok{(}\FunctionTok{dist}\NormalTok{(PromParMesClus), }\AttributeTok{method=}\StringTok{"average"}\NormalTok{)}
+\CommentTok{\# ver tabla de distancias}
+\FunctionTok{summary}\NormalTok{(HCMesPar)}
+\FunctionTok{print}\NormalTok{(HCMesPar)}
+
+\CommentTok{\# Graficar analisis}
+\FunctionTok{png}\NormalTok{(}\AttributeTok{file=}\StringTok{"HCMesPar.png"}\NormalTok{) }\CommentTok{\# preparando para guardar grafico, omitir esta linea si desea ver el grafico en consola}
+\FunctionTok{plot}\NormalTok{(HCMesPar ,}\AttributeTok{hang=}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\AttributeTok{main=}\StringTok{"Similitud entre Meses de acuerdo a parametros ambientales"}\NormalTok{, }\AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"Mar"}\NormalTok{, }\StringTok{"Sep"}\NormalTok{, }\StringTok{"Oct"}\NormalTok{))}
+
+\FunctionTok{rect.hclust}\NormalTok{(HCMesPar,}\DecValTok{2}\NormalTok{) }\CommentTok{\# numero de agrupaciones del cluster}
+\FunctionTok{dev.off}\NormalTok{() }\CommentTok{\# cerrar lineas y guardar grafico}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Error in parse(text = input): <text>:131:1: unexpected symbol
+## 130: 
+## 131: names
+##      ^
+\end{verbatim}
+
+\end{document}
